@@ -37,18 +37,21 @@ const SignUp = () => {
 
     }
 
-    const onSignuphandler = async() => {
+    const onSignuphandler = async(e) => {
+        e.preventDefault()
         try{
             if(password !== confirmpw){
                 alert("Password do not match")
             }
 
             const userInput = {
-                email, name, password, confirmpw, isPersonalInfoAgree, isMarketingAgree,
+                email, username: name, password, isPersonalInfoAgree, isMarketingAgree,
                 provider : "local",
                 profileImg : ""
             }
+            console.log(userInput)
             const {status} = await shopapi.post("/auth/signup", userInput)
+            console.log(status)
             if(status === 201){
                 navigate("/login")
             }

@@ -1,21 +1,24 @@
 import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import shopapi from "../services/api";
+import {useForm} from "react-hook-form";
 
 const LogIn = () => {
 
     const navigate = useNavigate()
+    const {register, handleSubmit} = useForm()
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    // const [email, setEmail] = useState("")
+    // const [password, setPassword] = useState("")
 
-    const onLoginhandler = async() => {
+    const onLoginhandler = async(data) => {
         try{
-            const userInput = {
-                email, password
-            }
-            const {data, status} = await shopapi.post("/auth/login/", userInput)
-            console.log(data, status)
+            // const userInput = {
+            //     email, password
+            // }
+            console.log(data)
+            const {status} = await shopapi.post("/auth/login/", data)
+            console.log(status)
             if(status === 200){
                 navigate("/")
             }
@@ -33,9 +36,9 @@ const LogIn = () => {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                <form className="space-y-6">
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label className="block text-sm font-medium leading-6 text-gray-900">
                             Email address
                         </label>
                         <div className="mt-2">
@@ -44,8 +47,9 @@ const LogIn = () => {
                                 name="email"
                                 autoComplete="email"
                                 required
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
+                                {...register("email")}
+                                // value={email}
+                                // onChange={e => setEmail(e.target.value)}
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -68,8 +72,9 @@ const LogIn = () => {
                                 name={"password"}
                                 autoComplete="current-password"
                                 required
-                                value={password}
-                                onChange={e=> setPassword(e.target.value)}
+                                {...register("password")}
+                                // value={password}
+                                // onChange={e=> setPassword(e.target.value)}
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -77,7 +82,7 @@ const LogIn = () => {
 
                     <div>
                         <button
-                            onClick={onLoginhandler}
+                            onClick={handleSubmit(onLoginhandler)}
                             className="flex w-full justify-center rounded-md bg-gray-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500"
                         >
                             Sign in
