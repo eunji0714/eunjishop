@@ -1,7 +1,29 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, {useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
+import shopapi from "../services/api";
 
 const LogIn = () => {
+
+    const navigate = useNavigate()
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const onLoginhandler = async() => {
+        try{
+            const userInput = {
+                email, password
+            }
+            const {data, status} = await shopapi.post("/auth/login/", userInput)
+            console.log(data, status)
+            if(status === 200){
+                navigate("/")
+            }
+        }catch(err){
+            console.log(err.message)
+        }
+    }
+
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -19,8 +41,11 @@ const LogIn = () => {
                         <div className="mt-2">
                             <input
                                 type="email"
+                                name="email"
                                 autoComplete="email"
                                 required
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -40,8 +65,11 @@ const LogIn = () => {
                         <div className="mt-2">
                             <input
                                 type="password"
+                                name={"password"}
                                 autoComplete="current-password"
                                 required
+                                value={password}
+                                onChange={e=> setPassword(e.target.value)}
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -49,7 +77,7 @@ const LogIn = () => {
 
                     <div>
                         <button
-                            type="submit"
+                            onClick={onLoginhandler}
                             className="flex w-full justify-center rounded-md bg-gray-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500"
                         >
                             Sign in
