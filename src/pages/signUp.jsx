@@ -1,86 +1,78 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import shopapi from "../services/api";
+import {useForm, useFormContext} from "react-hook-form";
 
 const SignUp = () => {
 
     const navigate = useNavigate()
+    const {register, watch, handleSubmit, setValue} = useForm()
 
-    const [email, setEmail] = useState("")
-    const [name, setName] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmpw, setConfirmpw] = useState("")
-    const [isMarketingAgree, setIsMarketingAgree] = useState(false)
-    const [isPersonalInfoAgree, setIsPersonalInfoAgree] = useState(false)
-    const [agreeCheckbox, setAgreeCheckbox] = useState(false)
-    const [btnDisabled, setBtnDisabled] = useState(false)
-    const onIdCheckhandler = async() => {
-       try{
-           const userInput = {
-               email
-           }
-           console.log(userInput)
-           const {status} = await shopapi.post('user/email', userInput)
-           if(status === 201){
-               alert("ID is already existed.")
-           }
-       }catch (err){
-           console.log(err.message)
-           if(email){
-               alert("ID can be used.")
-               setBtnDisabled(true)
+    const agreeData = [
 
-           }
+        {
+            "title" : "Agree Marketing",
+            "target" : "isMarketingAgree"
+        },
+        {
+            "title" : "Agree Personal Info",
+            "target" : "isPersonalInfoAgree"
+        }
+    ]
+    const handleSelectAll = (e) => {
+        if (e.currentTarget.checked) { // selectAll 체크박스가 체크되면
+            agreeData.forEach((item) => {
+                setValue(`${item.target}`, true); // 모든 체크박스의 value를 true로
+            });
+        } else { // selectAll 체크박스가 체크해제되면
+            agreeData.forEach((item) => {
+                setValue(`${item.target}`, false); // 모든 체크박스의 value를 false로
+            });
+        }
+    };
 
-
-       }
-
+    const checkEmail = (data) => {
+        const {email} = data
+        console.log("-------", email)
     }
 
-    const onSignuphandler = async(e) => {
-        e.preventDefault()
-        try{
-            if(password !== confirmpw){
+    useEffect(
+        () => {
+            if (agreeData.every((item) => watch(`${item.target}`) === true)) {
+                setValue("selectAll", true);
+            } else {
+                setValue("selectAll", false);
+            }
+        },
+        agreeData.map((item) => watch(`${item.target}`))
+    );
+
+
+
+    const onSignuphandler = async(data) => {
+        // e.preventDefault()
+        try {
+            console.log(data)
+            const {email, username, password, confirmpw, isMarketingAgree, isPersonalInfoAgree} = data
+            if (password !== confirmpw) {
                 alert("Password do not match")
             }
 
             const userInput = {
-                email, username: name, password, isPersonalInfoAgree, isMarketingAgree,
-                provider : "local",
-                profileImg : ""
+                email, username, password, isPersonalInfoAgree, isMarketingAgree,
+                provider: "local",
+                profileImg: ""
             }
-            console.log(userInput)
+            console.log("++++", userInput)
             const {status} = await shopapi.post("/auth/signup", userInput)
             console.log(status)
-            if(status === 201){
+            if (status === 201) {
                 navigate("/login")
             }
-        }catch(err){
+        } catch (err) {
             console.log(err.message)
         }
     }
-
-    const onAgreehandler = (e) => {
-
-        e.preventDefault()
-
-        setIsPersonalInfoAgree(!agreeCheckbox)
-        setIsMarketingAgree(!agreeCheckbox)
-        console.log(agreeCheckbox)
-
-    }
-
-    useEffect(() => {
-        if(!isMarketingAgree || !isPersonalInfoAgree){
-            setAgreeCheckbox(false)
-        }
-        if(isMarketingAgree && isPersonalInfoAgree){
-            setAgreeCheckbox(true)
-        }
-
-
-    }, [isMarketingAgree, isPersonalInfoAgree])
-
 
 
     return (
@@ -100,9 +92,8 @@ const SignUp = () => {
                                 Email address
                             </label>
                             <button
-                                className={`border opacity-50 border-gray-400 rounded px-1.5 text-xs ${btnDisabled ? `bg-gray-300` : null} hover:bg-gray-300`}
-                                onClick={onIdCheckhandler}
-                                disabled={btnDisabled}
+                                className={`border opacity-50 border-gray-400 rounded px-1.5 text-xs  hover:bg-gray-300`}
+                                onClick={handleSubmit(checkEmail)}
                             >
                                 중복확인
                             </button>
@@ -110,11 +101,9 @@ const SignUp = () => {
                         <div className="mt-1">
                             <input
                                 type="email"
-                                value={email}
                                 autoComplete="email"
-                                required
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                onChange={e=> setEmail(e.target.value)}
+                                {...register("email", {required : true})}
                             />
                         </div>
                     </div>
@@ -126,10 +115,8 @@ const SignUp = () => {
                         <div className="mt-1">
                             <input
                                 type="text"
-                                value={name}
-                                required
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                onChange={e=> setName(e.target.value)}
+                                {...register("username", {required : true})}
                             />
                         </div>
                     </div>
@@ -144,11 +131,9 @@ const SignUp = () => {
                         <div className="mt-1">
                             <input
                                 type="password"
-                                value={password}
                                 autoComplete="current-password"
-                                required
-                                onChange={e=> setPassword(e.target.value)}
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                {...register("password", {required:true})}
                             />
                         </div>
                     </div>
@@ -162,47 +147,32 @@ const SignUp = () => {
                         <div className="mt-1">
                             <input
                                 type="password"
-                                value={confirmpw}
                                 autoComplete="current-password"
-                                required
-                                onChange={e=> setConfirmpw(e.target.value)}
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                {...register("confirmpw")}
                             />
                         </div>
                     </div>
 
                     <div>
-                        <div className={"flex justify-between"}>
-                            <div className={"flex"}>
-                                <div className={"mr-3"}>
-                                    <input
-                                        type={"checkbox"}
-                                        value={isMarketingAgree}
-                                        onChange={e=> setIsMarketingAgree(e.target.checked)}
-                                        checked={isMarketingAgree}
-                                    />
-                                    <label className={"text-sm align-top font-medium leading-6 text-gray-900"}> Agree Marketing</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type={"checkbox"}
-                                        value={isPersonalInfoAgree}
-                                        onChange={e=> setIsPersonalInfoAgree(e.target.checked)}
-                                        checked={isPersonalInfoAgree}
-                                    />
-                                    <label className={"text-sm align-top font-medium leading-6 text-gray-900"}> Agree Personal Info</label>
-                                </div>
-                            </div>
-                            <div>
-                                <input
-                                    type={"checkbox"}
-                                    value={agreeCheckbox}
-                                    onChange={onAgreehandler}
-                                    checked={agreeCheckbox}
+                        <div>
+                            <input
+                                type={"checkbox"}
+                                {...register("selectAll")}
+                                onChange={handleSelectAll}
+                            />
+                            <label className={"align-top font-bold leading-6 text-gray-900 text-red-400 text-sm"}> All Agree</label>
 
-                                />
-                                <label className={"text-red-400 text-sm align-top font-medium leading-6 text-gray-900"}> All agree</label>
+                            <div className={"flex"}>
+                                {agreeData.map((item)=> (
+                                    <div className={"mr-10"}>
+                                        <input {...register(`${item.target}`)} key={`${item.target}`} type={"checkbox"} />
+                                        <label className={"text-sm align-top font-medium leading-6 text-gray-900"}> {item.title}</label>
+
+                                    </div>
+                                ))}
                             </div>
+
                         </div>
 
 
@@ -211,7 +181,7 @@ const SignUp = () => {
                     <div>
                         <button
                             className="mt-6 flex w-full justify-center rounded-md bg-gray-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500"
-                            onClick={onSignuphandler}
+                            onClick={handleSubmit(onSignuphandler)}
                         >
                             Create account
                         </button>
@@ -229,6 +199,7 @@ const SignUp = () => {
             </div>
         </div>
     );
+
 };
 
 export default SignUp;

@@ -1,24 +1,39 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import async from "async";
 import shopapi from "../services/api";
+import axios from "axios";
 
 const NewProduct = () => {
 
     const [product, setProduct] = useState({
         name : "",
-        price : 0,
+        price : null,
         brand : "",
-        stock : 0,
+        stock : null,
         desc1 : "",
         desc2 : "",
-        productImg : "",
+        productImg1 : "",
     })
     console.log(product)
+    const [brands, setBrands] = useState([])
     // const [name, setName] = useState("")
-
+    console.log("--", brands)
     const handleChange = async(e) => {
         const {name, value} = e.target
         setProduct((product) => ({...product, [name]: value}))
+    }
+
+    const getBrands = async() => {
+        try{
+            const {data, status} = await shopapi.get("/brand")
+            console.log(data, status)
+
+            if(status === 200){
+                setBrands(data.data)
+            }
+        }catch(err){
+            console.log(err.message)
+        }
     }
 
     const handleSubmit = async(e) => {
@@ -34,16 +49,20 @@ const NewProduct = () => {
 
     }
 
+    useEffect(()=>{
+        getBrands()
+    },[])
+
     return (
         <section className={"w-full text-center"}>
             <h2 className={"my-4 text-2xl font-bold"}>새로운 제품 등록</h2>
             <form className={"flex flex-col px-12"} onSubmit={handleSubmit}>
                 <input
                     type={"text"}
-                    name={"productImg"}
+                    name={"productImg1"}
                     placeholder={"제품이미지"}
                     required
-                    value={product.productImg}
+                    value={product.productImg1}
                     onChange={handleChange}
                 />
                 <input
@@ -63,14 +82,14 @@ const NewProduct = () => {
                     value={product.price}
                     onChange={handleChange}
                 />
-                <input
-                    type={"text"}
-                    name={"brand"}
-                    placeholder={"브랜드"}
-                    required
-                    value={product.brand}
-                    onChange={handleChange}
-                />
+                <select className="w150" onChange={(e) => setProduct({...product, brand: e.target.value })}>
+                    <option>브랜드 선택</option>
+                    {brands?.map((brand, index) => (
+                        <option value={brand.id} key={index}>
+                            {brand.name}
+                        </option>
+                    ))}
+                </select>
                 <input
                     type={"number"}
                     name={"stock"}
