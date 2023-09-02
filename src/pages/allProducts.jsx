@@ -1,6 +1,7 @@
 import React from 'react';
 import {useFetchProducts} from "../services/fetchProducts";
 import {useFetchBrands} from "../services/fetchBrands";
+import {Link} from "react-router-dom";
 
 const AllProducts = () => {
 
@@ -24,6 +25,7 @@ const AllProducts = () => {
                         className={"flex font-semibold mb-4"}
                         onClick={(e)=>filteredProduct(e.target.value)}
                     >
+
                         <p className={"text-lg"}>{brand.name}</p>
                     </button>
                 ))}
@@ -31,18 +33,21 @@ const AllProducts = () => {
 
             <div className={"flex mt-8 ml-7"}>
                 {products?.map((product, index) => (
-                    <div className="w-full lg:max-w-full  mb-3 ml-7 mt-5 mb-5">
+                    <div className="w-full lg:max-w-full  mb-3 ml-7 mt-5 mb-5" key={index}>
                         <div className={"ml-2 bg-stone-100 border-2 w-52 lg:w-52 flex-none "}>
-                            <img src={product.productImg1}  />
+                            <Link to={`/products/${product.id}`}>
+                                <img src={product.productImg1}  />
+                            </Link>
+
                         </div>
                         <div
                             className="bg-white rounded-b p-4 flex flex-col justify-between leading-normal">
                             <div className="mb-5">
-                                <p className="text-gray-700 text-sm mb-1 font-bold">브랜드이름</p>
+                                {console.log(product.brand.name)}
+                                <p className="text-gray-700 text-sm mb-1 font-bold">{product.brand.name}</p>
                                 <div className="text-gray-900 text-sm">
                                     {product.name}
                                 </div>
-
                             </div>
                             <div className="flex items-center">
                                 <div className="">
