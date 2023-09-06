@@ -11,15 +11,13 @@ const LogIn = () => {
     // const [email, setEmail] = useState("")
     // const [password, setPassword] = useState("")
 
-    const onLoginhandler = async(data) => {
+    const onLoginhandler = async() => {
         try{
-            // const userInput = {
-            //     email, password
-            // }
-            console.log(data)
-            const {status} = await shopapi.post("/auth/login/", data)
-            console.log(status)
+
+
+            const {data,status} = await shopapi.post("/auth/login/", data)
             if(status === 200){
+
                 navigate("/")
             }
         }catch(err){

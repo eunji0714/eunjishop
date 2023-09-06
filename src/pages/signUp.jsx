@@ -103,7 +103,8 @@ const SignUp = () => {
                                 type="email"
                                 autoComplete="email"
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                {...register("email", {required : true})}
+                                required
+                                {...register("email")}
                             />
                         </div>
                     </div>
@@ -115,8 +116,9 @@ const SignUp = () => {
                         <div className="mt-1">
                             <input
                                 type="text"
+                                required
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                {...register("username", {required : true})}
+                                {...register("username")}
                             />
                         </div>
                     </div>
@@ -132,8 +134,9 @@ const SignUp = () => {
                             <input
                                 type="password"
                                 autoComplete="current-password"
+                                required
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                {...register("password", {required:true})}
+                                {...register("password")}
                             />
                         </div>
                     </div>
@@ -148,6 +151,7 @@ const SignUp = () => {
                             <input
                                 type="password"
                                 autoComplete="current-password"
+                                required
                                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 {...register("confirmpw")}
                             />
