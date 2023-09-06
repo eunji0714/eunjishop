@@ -2,27 +2,23 @@ import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import shopapi from "../services/api";
 import {useForm} from "react-hook-form";
+import loginHandler from "../services/useLoginHandler";
 
 const LogIn = () => {
 
     const navigate = useNavigate()
+
+    // hook-form
     const {register, handleSubmit} = useForm()
 
-    // const [email, setEmail] = useState("")
-    // const [password, setPassword] = useState("")
+    //use-query
+    const {isError, mutateAsync} = loginHandler()
 
-    const onLoginhandler = async() => {
-        try{
-
-
-            const {data,status} = await shopapi.post("/auth/login/", data)
-            if(status === 200){
-
-                navigate("/")
-            }
-        }catch(err){
-            console.log(err.message)
-        }
+    const onLoginhandler = async(userInput) => {
+        console.log(userInput)
+        await  mutateAsync(userInput)
+        // await localStorage.setItem("token", JSON.stringify(data.token))
+        navigate("/")
     }
 
     return (

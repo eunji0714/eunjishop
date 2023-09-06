@@ -50,28 +50,13 @@ const SignUp = () => {
 
 
     const onSignuphandler = async(data) => {
-        // e.preventDefault()
-        try {
-            console.log(data)
-            const {email, username, password, confirmpw, isMarketingAgree, isPersonalInfoAgree} = data
-            if (password !== confirmpw) {
-                alert("Password do not match")
-            }
-
-            const userInput = {
-                email, username, password, isPersonalInfoAgree, isMarketingAgree,
-                provider: "local",
-                profileImg: ""
-            }
-            console.log("++++", userInput)
-            const {status} = await shopapi.post("/auth/signup", userInput)
-            console.log(status)
-            if (status === 201) {
-                navigate("/login")
-            }
-        } catch (err) {
-            console.log(err.message)
+        const {email, username, password, confirmpw, isMarketingAgree, isPersonalInfoAgree} = data
+        const userInput = {
+            email, username, password, isPersonalInfoAgree, isMarketingAgree
         }
+
+        console.log(userInput)
+
     }
 
 
