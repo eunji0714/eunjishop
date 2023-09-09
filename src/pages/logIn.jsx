@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import shopapi from "../services/api";
 import {useForm} from "react-hook-form";
 import loginHandler from "../services/useLoginHandler";
 

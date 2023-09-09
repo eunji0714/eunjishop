@@ -11,12 +11,6 @@ const useLoginHandler = () => {
 
     return useMutation({
         mutationFn: (userInput) => loginHandler(userInput),
-            // shopapi
-            //     .post("/auth/login", {
-            //         email : userInput.email,
-            //         password : userInput.password
-            //     })
-            //     .then(res => res.data.data),
         onSuccess: (data) => {
             localStorage.setItem("token",data.token)
             queryClient.invalidateQueries({

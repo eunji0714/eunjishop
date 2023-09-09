@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import shopapi from "../services/api";
 import {useForm, useFormContext} from "react-hook-form";
+import signupHandler from "../services/useSignupHandler";
 
 const SignUp = () => {
 
     const navigate = useNavigate()
+
+    //hook-form
     const {register, watch, handleSubmit, setValue} = useForm()
+
+    //use-query
+    const {isError, mutateAsync} = signupHandler()
 
     const agreeData = [
 
@@ -31,6 +36,7 @@ const SignUp = () => {
         }
     };
 
+    //email 중복확인 안됨..
     const checkEmail = (data) => {
         const {email} = data
         console.log("-------", email)
@@ -51,12 +57,16 @@ const SignUp = () => {
 
     const onSignuphandler = async(data) => {
         const {email, username, password, confirmpw, isMarketingAgree, isPersonalInfoAgree} = data
+        if( password !== confirmpw ){
+            alert("Password do not match.")
+        }
+
         const userInput = {
             email, username, password, isPersonalInfoAgree, isMarketingAgree
         }
 
-        console.log(userInput)
-
+        await mutateAsync(userInput)
+        navigate("/login")
     }
 
 
