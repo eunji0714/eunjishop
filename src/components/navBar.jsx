@@ -4,6 +4,7 @@ import {FiShoppingBag} from "react-icons/fi";
 import {BsFillPencilFill} from "react-icons/bs";
 import User from "./User";
 import axios from "axios";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 
 
@@ -40,6 +41,7 @@ const NavBar = () => {
             getProfile(token)
         }
     },[])
+    console.log(user)
 
     console.log(user.username)
     return (
@@ -56,11 +58,21 @@ const NavBar = () => {
                 </Link>
                 { isLoggedIn
                     ? (
-                        <Link to={"/"}>
-                            <button onClick={logoutHandler}>
-                                LogOut
-                            </button>
-                        </Link>
+                        <div className={"group relative text-base sm:text-sm"}>
+                            <div className={"w-1/5 overflow-hidden rounded-full bg-gray-100 "}>
+                                <Link to={"/"}>
+                                    <LazyLoadImage
+                                        src={user.profileImg}
+                                        alt={user.name}
+                                        // className={"object-cover object-center "}
+                                    />
+                                    {/*<button onClick={logoutHandler}>*/}
+                                    {/*    LogOut*/}
+                                    {/*</button>*/}
+                                </Link>
+                            </div>
+                        </div>
+
                     )
                     : (
 

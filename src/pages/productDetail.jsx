@@ -25,7 +25,7 @@ const ProductDetail = () => {
                 <h1 className={"mt-14 text-lg font-bold"}>{product.brand.name}</h1>
                 <h1 className={"text-2xl font-bold"}>{product.name}</h1>
                 <h1 className={"mt-12 text-gray-400 font-semibold"}>판매가격</h1>
-                <h1 className={"mt-2 text-4xl font-bold"}>{product.price}원</h1>
+                <h1 className={"mt-2 text-4xl font-bold"}>{product.price.toLocaleString()}원</h1>
                 <select className="font-bold mt-5 bg-gray-50 border-2 border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-2.5 py-3.5 pr-96 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected className={""}>사이즈</option>
                     <option>230</option>

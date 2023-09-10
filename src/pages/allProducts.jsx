@@ -51,7 +51,7 @@ const AllProducts = () => {
                             </div>
                             <div className="flex items-center">
                                 <div className="">
-                                    <p className="text-gray-900 leading-none font-semibold">{product.price}원</p>
+                                    <p className="text-gray-900 leading-none font-semibold">{product.price.toLocaleString()}원</p>
                                     <p className="text-red-400 text-sm mt-1">{product.stock}개 남음</p>
                                 </div>
                             </div>

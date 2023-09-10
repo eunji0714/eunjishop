@@ -1,9 +1,14 @@
 import React from 'react';
+import Main from "../components/Main";
+import Intro from "../components/Intro";
+import Faq from "../components/Faq";
 
 const Home = () => {
     return (
         <div>
-            <h1>home</h1>
+            <Main />
+            <Intro />
+            <Faq />
         </div>
     );
 };
