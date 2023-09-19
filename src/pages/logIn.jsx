@@ -5,11 +5,13 @@ import loginHandler from "../services/useLoginHandler";
 import Loading from "../components/Loading";
 import {EMAIL_REGEX} from "../data/Auth/authData";
 import AuthImageContainter from "../components/ui/AuthImageContainter";
+import {useAuth} from "../context/AuthContext";
 
 const LogIn = () => {
 
     const navigate = useNavigate()
-
+    const {user, isAuthed} = useAuth()
+    console.log(user, isAuthed)
     // hook-form
     const {
         register,

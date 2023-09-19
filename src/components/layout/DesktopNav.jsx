@@ -200,12 +200,12 @@ const DesktopNav = (
                                                                 'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none ',
                                                             )}
                                                             ref={ref}
-                                                            onMouseEnter={onMouseEnter.bind(null, open)}
-                                                            onMouseLeave={onMouseLeave.bind(null, open)}
+                                                            // onMouseEnter={onMouseEnter.bind(null, open)}
+                                                            // onMouseLeave={onMouseLeave.bind(null, open)}
                                                         >
                                                             <User
-                                                                displayName={userData.displayName}
-                                                                photoURL={userData.photoURL}
+                                                                displayName={userData.name}
+                                                                photoURL={userData.profileImg}
                                                                 mobile={false}
                                                             />
                                                         </Popover.Button>

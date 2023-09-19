@@ -7,13 +7,16 @@ import router from './router';
 import {ReactQueryProvider} from "./Provider";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import "./locales/i18n";
+import {AuthProvider} from "./context/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <ReactQueryProvider>
-          <RouterProvider router={router}/>
-          <ReactQueryDevtools initialIsOpen={false} />
+          <AuthProvider>
+              <RouterProvider router={router}/>
+              <ReactQueryDevtools initialIsOpen={false} />
+          </AuthProvider>
       </ReactQueryProvider>
 
   </React.StrictMode>
