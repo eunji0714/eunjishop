@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/20/solid";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import User from "../User";
+import LoadingSkeleton from "../ui/LoadingSkeleton";
 
 const DesktopNav = (
     {
@@ -184,9 +185,9 @@ const DesktopNav = (
                     <div className="ml-auto flex items-center">
                         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                             <div className="hidden items-center justify-end md:flex md:flex-1">
-                                {/*{loading && !userData && (*/}
-                                {/*    // <LoadingSkeleton className="h-10 w-10 animate-pulse rounded-md bg-gray-200" />*/}
-                                {/*)}*/}
+                                {loading && !userData && (
+                                    <LoadingSkeleton className="h-10 w-10 animate-pulse rounded-md bg-gray-200" />
+                                )}
                                 {userData && (
                                     <div className="flex items-center">
                                         <Popover className="relative hidden leading-3 md:block">
