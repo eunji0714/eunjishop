@@ -1,0 +1,10 @@
+{
+  "header": {
+    "eunjishop": "eunjishop__",
+    "logout": "Logout",
+    "login": "Login",
+    "language": "Language",
+    "products": "Products",
+    "carts": "Carts"
+  }
+}

@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 
 const AllProducts = () => {
 
+
+
     const {data: products, isLoading, isError} = useFetchProducts()
     const {data: brands} = useFetchBrands()
 
@@ -15,7 +17,7 @@ const AllProducts = () => {
     }
 
     return (
-        <div className={"flex flex-wrap mt-5 ml-10"}>
+        <div className={"flex flex-wrap mt-5 ml-10 mb-32"}>
             <div className={"mr-10 mt-3 ml-4"}>
                 <p className={"mt-10 text-2xl font-bold"}>브랜드</p>
                 <p className={"mb-4 font-extrabold mr-5"}>_________________</p>

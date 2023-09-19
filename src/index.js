@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {RouterProvider} from "react-router-dom";
 import router from './router';
 import {ReactQueryProvider} from "./Provider";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import "./locales/i18n";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -30,19 +30,19 @@ const LogIn = () => {
 
     return (
 
-        <section className={"m-auto grid min-h-[calc(100vh-65px)] w-full grid-cols-10"}>
+        <section className={" grid min-h-[calc(100vh-100px)] grid-cols-10"}>
             {isLoading && <Loading /> }
             <div className={"col-span-10 flex h-full w-full grow flex-col items-center justify-center bg-white shadow-slate-50 drop-shadow-md lg:col-span-4"}>
                 <div className={"mb-14 flex-col items-center text-center"}>
                     <h2 className={"mb-2 text-3xl font-bold"}>
-                        Hello again, eunji shop
+                        Hello, here's eunji shop
                     </h2>
                     <p className={"text-slate-500"}>
-                        Welcome back! Please enter you detail
+                        Welcome! Please enter you detail
                     </p>
                 </div>
-                <div className={"flex w-full flex-col items-center"}>
-                    <form className="space-y-6">
+                <div className={"flex flex-col items-center"}>
+                    <form className="w-96 space-y-6">
                         <div>
                             <label className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -95,33 +95,23 @@ const LogIn = () => {
                             </button>
                         </div>
                     </form>
+
+                    <p className="mt-10 text-center text-sm text-gray-500">
+                        Don't have an account yet? {' '}
+                        <Link to={'/signup'} className="font-semibold leading-6 text-black hover:text-gray-500">
+                            Sign up
+                        </Link>
+
+                    </p>
                 </div>
             </div>
             <AuthImageContainter
                 image={"https://img.freepik.com/free-photo/3d-render-smartphone-with-hand-fill-online-survey_107791-15837.jpg?size=626&ext=jpg"}
-                firstText={"Eunji shop for Smart shopper"}
-                secondText={"Login Here"}
+                firstText={"Login Here"}
+                secondText={"Eunji shop for Smart shopper"}
             />
         </section>
-        // <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        //     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        //         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-        //             Sign in to your account
-        //         </h2>
-        //     </div>
-        //
-        //     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
-        //
-        //         <p className="mt-10 text-center text-sm text-gray-500">
-        //             Don't have an account yet? {' '}
-        //             <Link to={'/signup'} className="font-semibold leading-6 text-black hover:text-gray-500">
-        //                 Sign up
-        //             </Link>
-        //
-        //         </p>
-        //     </div>
-        // </div>
     );
 };
 

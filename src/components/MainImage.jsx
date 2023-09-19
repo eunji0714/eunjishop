@@ -29,11 +29,11 @@ const MainImage = ({
                     {name}
                 </h3>
                 <div className="flex items-end justify-between pt-4">
-                    <div className="relative rounded-lg border-2 border-violet-500 px-2 py-1">
-            <span className="absolute -top-3 bg-white px-2 text-xs text-violet-400">
+                    <div className="relative rounded-lg border-2 border-yellow-900 px-2 py-1">
+            <span className="absolute -top-3 bg-white px-2 text-xs text-yellow-800">
               Price
             </span>
-                        <p className=" flex items-center text-lg font-bold text-violet-500">
+                        <p className=" flex items-center text-lg font-bold text-yellow-800">
                             <AiOutlineDollarCircle className="mr-1" />
                             {price}
                         </p>
